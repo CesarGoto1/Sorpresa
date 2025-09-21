@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorpresa Especial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(circle at center, #1a1a2e, #16213e, #0f0f23);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+        
+        /* Estrellas en el fondo */
+        .estrella {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: parpadeo 2s infinite ease-in-out;
+        }
+        
+        @keyframes parpadeo {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        /* Contenedor principal */
+        .portada {
+            text-align: center;
+            z-index: 10;
+            width: 100%;
+            max-width: 500px;
+            padding: 40px 30px;
+            background: rgba(42, 42, 78, 0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: aparicion 2s ease-out;
+        }
+        
+        @keyframes aparicion {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .titulo {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: bold;
+            background: linear-gradient(45deg, #ffff99, #ffdd33, #ffcc00, #e6b800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            text-shadow: 0 0 30px rgba(255, 255, 102, 0.5);
+            animation: brillo 3s ease-in-out infinite;
+        }
+        
+        @keyframes brillo {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+        
+        .descripcion {
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            color: #cccccc;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .boton-continuar {
+            background: linear-gradient(45deg, #ffff99, #ffdd33, #ffcc00);
+            color: #333;
+            border: none;
+            padding: 15px 35px;
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(255, 255, 102, 0.3);
+            touch-action: manipulation;
+        }
+        
+        .boton-continuar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 255, 102, 0.5);
+            background: linear-gradient(45deg, #ffffcc, #ffff66, #ffdd00);
+        }
+        
+        .boton-continuar:active {
+            transform: translateY(-1px);
+        }
+        
+        .boton-continuar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .boton-continuar:hover::before {
+            left: 100%;
+        }
+        
+        /* Icono de sorpresa */
+        .icono-sorpresa {
+            font-size: clamp(3rem, 10vw, 5rem);
+            margin-bottom: 30px;
+            animation: flotar 3s ease-in-out infinite;
+        }
+        
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+        
+        /* Partículas flotantes */
+        .particula {
+            position: absolute;
+            background: rgba(255, 255, 102, 0.6);
+            border-radius: 50%;
+            animation: flotar-particula 6s infinite ease-in-out;
+        }
+        
+        @keyframes flotar-particula {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 0.8;
+            }
+        }
+        
+        /* Responsive específico para móviles */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .portada {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            
+            .boton-continuar {
+                padding: 12px 25px;
+                min-height: 48px; /* Para mejor touch en móviles */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .portada {
+                padding: 25px 15px;
+            }
+            
+            .descripcion {
+                margin-bottom: 30px;
+            }
+        }
+        
+        /* Orientación landscape en móviles */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                justify-content: flex-start;
+                padding-top: 20px;
+            }
+            
+            .portada {
+                padding: 20px;
+            }
+            
+            .icono-sorpresa {
+                margin-bottom: 15px;
+            }
+            
+            .descripcion {
+                margin-bottom: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Estrellas de fondo -->
+    <div class="estrella" style="top: 10%; left: 15%; width: 3px; height: 3px; animation-delay: 0s;"></div>
+    <div class="estrella" style="top: 20%; left: 80%; width: 2px; height: 2px; animation-delay: 1s;"></div>
+    <div class="estrella" style="top: 30%; left: 25%; width: 3px; height: 3px; animation-delay: 2s;"></div>
+    <div class="estrella" style="top: 15%; left: 60%; width: 2px; height: 2px; animation-delay: 0.5s;"></div>
+    <div class="estrella" style="top: 40%; left: 85%; width: 3px; height: 3px; animation-delay: 1.5s;"></div>
+    <div class="estrella" style="top: 60%; left: 10%; width: 2px; height: 2px; animation-delay: 2.5s;"></div>
+    <div class="estrella" style="top: 70%; left: 70%; width: 3px; height: 3px; animation-delay: 0.8s;"></div>
+    <div class="estrella" style="top: 80%; left: 40%; width: 2px; height: 2px; animation-delay: 1.8s;"></div>
+    
+    <!-- Partículas flotantes -->
+    <div class="particula" style="top: 25%; left: 20%; width: 4px; height: 4px; animation-delay: 0s;"></div>
+    <div class="particula" style="top: 45%; left: 75%; width: 3px; height: 3px; animation-delay: 2s;"></div>
+    <div class="particula" style="top: 65%; left: 30%; width: 5px; height: 5px; animation-delay: 4s;"></div>
+    <div class="particula" style="top: 35%; left: 90%; width: 3px; height: 3px; animation-delay: 1s;"></div>
+    
+    <!-- Contenido principal -->
+    <div class="portada">
+        <div class="icono-sorpresa">🎁</div>
+        
+        <h1 class="titulo">Sorpresa</h1>
+        
+        <p class="descripcion">
+            Tengo algo especial preparado para ti...
+        </p>
+        
+        <a href="Flores.html" class="boton-continuar">
+            Ver Sorpresa
+        </a>
+    </div>
+
+    <script>
+        // Agregar más estrellas dinámicamente (menos en móviles)
+        function crearEstrellas() {
+            const body = document.body;
+            const isMobile = window.innerWidth <= 768;
+            const numEstrellas = isMobile ? 10 : 20;
+            
+            for (let i = 0; i < numEstrellas; i++) {
+                const estrella = document.createElement('div');
+                estrella.className = 'estrella';
+                estrella.style.top = Math.random() * 100 + '%';
+                estrella.style.left = Math.random() * 100 + '%';
+                estrella.style.width = (Math.random() * 3 + 1) + 'px';
+                estrella.style.height = estrella.style.width;
+                estrella.style.animationDelay = Math.random() * 3 + 's';
+                body.appendChild(estrella);
+            }
+        }
+        
+        // Crear partículas adicionales (menos en móviles)
+        function crearParticulas() {
+            const body = document.body;
+            const isMobile = window.innerWidth <= 768;
+            const numParticulas = isMobile ? 5 : 10;
+            
+            for (let i = 0; i < numParticulas; i++) {
+                const particula = document.createElement('div');
+                particula.className = 'particula';
+                particula.style.top = Math.random() * 100 + '%';
+                particula.style.left = Math.random() * 100 + '%';
+                particula.style.width = (Math.random() * 4 + 2) + 'px';
+                particula.style.height = particula.style.width;
+                particula.style.animationDelay = Math.random() * 6 + 's';
+                body.appendChild(particula);
+            }
+        }
+        
+        // Inicializar cuando carga la página
+        window.addEventListener('load', () => {
+            crearEstrellas();
+            crearParticulas();
+        });
+        
+        // Manejar cambios de orientación
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                // Recrear elementos para nueva orientación
+                const estrellas = document.querySelectorAll('.estrella');
+                const particulas = document.querySelectorAll('.particula');
+                
+                estrellas.forEach(estrella => {
+                    if (!estrella.style.position) return; // Solo las dinámicas
+                    estrella.remove();
+                });
+                
+                particulas.forEach(particula => {
+                    if (!particula.style.position) return; // Solo las dinámicas
+                    particula.remove();
+                });
+                
+                crearEstrellas();
+                crearParticulas();
+            }, 500);
+        });
+        
+        // Efecto de hover en el botón (solo en dispositivos no táctiles)
+        const boton = document.querySelector('.boton-continuar');
+        if (!('ontouchstart' in window)) {
+            boton.addEventListener('mouseenter', () => {
+                boton.style.filter = 'brightness(1.1)';
+            });
+            
+            boton.addEventListener('mouseleave', () => {
+                boton.style.filter = 'brightness(1)';
+            });
+        }
+    </script>
+</body>
+</html>
