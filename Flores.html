@@ -22,7 +22,6 @@
             background: radial-gradient(ellipse at center bottom, #2a2a4e 0%, #1a1a2e 50%, #0f0f23 100%);
         }
         
-        /* Mensaje romántico */
         .mensaje {
             position: fixed;
             top: 50%;
@@ -80,7 +79,6 @@
             50% { transform: scale(1.2); }
         }
         
-        /* Botón de música responsivo */
         .boton-musica {
             position: fixed !important;
             top: 20px !important;
@@ -105,7 +103,6 @@
             box-shadow: 0 8px 20px rgba(255, 255, 102, 0.6) !important;
         }
         
-        /* Media queries para móviles */
         @media (max-width: 768px) {
             .mensaje {
                 padding: 25px 30px;
@@ -135,7 +132,6 @@
             }
         }
         
-        /* Orientación landscape en móviles */
         @media (max-height: 500px) and (orientation: landscape) {
             .mensaje {
                 padding: 15px 25px;
@@ -146,27 +142,21 @@
 </head>
 <body>
     <canvas id="canvas"></canvas>
-    
-    <!-- Mensaje romántico -->
     <div class="mensaje">
         <h2>Para Ti</h2>
         <p>Estas flores son para ti,<br>
         amarillas como las estrellas,<br>
         tan bonitas como tú <span class="corazon">♥</span></p>
     </div>
-    
-    <!-- Elemento de audio para la música -->
     <audio id="musicaFondo" loop>
         <source src="Carla Morrison - Disfruto (letra).mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
     </audio>
-    
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         let animationFrame = 0;
         
-        // Configurar canvas a pantalla completa
         function ajustarCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -181,47 +171,40 @@
             
             const flores = [];
             
-            // Calcular el tamaño base según el tamaño de pantalla
             let escalaBase;
             if (isSmallScreen) {
-                escalaBase = Math.min(canvasWidth, canvasHeight) / 600; // Muy pequeño para móviles pequeños
+                escalaBase = Math.min(canvasWidth, canvasHeight) / 600;
             } else if (isMobile) {
-                escalaBase = Math.min(canvasWidth, canvasHeight) / 500; // Pequeño para móviles
+                escalaBase = Math.min(canvasWidth, canvasHeight) / 500;
             } else {
-                escalaBase = Math.min(canvasWidth, canvasHeight) / 400; // Tamaño normal para desktop
+                escalaBase = Math.min(canvasWidth, canvasHeight) / 400;
             }
             
-            // Asegurar que el tamaño base no sea demasiado pequeño ni grande
             escalaBase = Math.max(0.4, Math.min(escalaBase, 1.2));
             
-            // Calcular espaciado dinámico
-            const margen = canvasWidth * 0.1; // 10% de margen
+            const margen = canvasWidth * 0.1;
             const espacioDisponible = canvasWidth - (2 * margen);
             const spacing = espacioDisponible / (numFlores + 1);
             
-            // Tamaños aleatorios que se ajusten a la pantalla
             const escalasAleatorias = [];
             
-            // Generar escalas aleatorias basadas en el tamaño de pantalla
             for (let i = 0; i < numFlores; i++) {
-                const variacion = 0.3 + Math.random() * 0.4; // Variación entre 0.3 y 0.7
+                const variacion = 0.3 + Math.random() * 0.4;
                 escalasAleatorias.push(escalaBase * variacion);
             }
             
-            // Mezclar las escalas para evitar cualquier orden
             for (let i = escalasAleatorias.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [escalasAleatorias[i], escalasAleatorias[j]] = [escalasAleatorias[j], escalasAleatorias[i]];
             }
             
-            // Crear las flores con posicionamiento calculado
             for (let i = 0; i < numFlores; i++) {
                 const x = margen + spacing * (i + 1);
                 
                 flores.push({
                     x: x,
                     delay: i * 30 + Math.random() * 20,
-                    color: '#ffff99', // Solo amarillo
+                    color: '#ffff99',
                     scale: escalasAleatorias[i],
                     swaySpeed: 0.04 + Math.random() * 0.02
                 });
@@ -275,10 +258,9 @@
             ctx.fillStyle = gradient;
             ctx.fillRect(0, canvas.height - sueloHeight, canvas.width, sueloHeight);
             
-            // Hierba más densa
             ctx.strokeStyle = '#4a7c2f';
             ctx.lineWidth = 1.5;
-            const spacing = Math.max(8, canvas.width / 100); // Espaciado adaptativo
+            const spacing = Math.max(8, canvas.width / 100);
             
             for (let i = 10; i < canvas.width; i += spacing) {
                 const altura = 6 + Math.sin(animationFrame * 0.04 + i * 0.1) * 4;
@@ -301,7 +283,6 @@
             const sway = Math.sin(animationFrame * flor.swaySpeed) * 3;
             const sueloHeight = canvas.height * 0.15;
             
-            // Calcular altura del tallo basada en el tamaño de pantalla
             const alturaMaxima = Math.min(canvas.height * 0.6, canvas.width * 0.3);
             const talloHeight = alturaMaxima * Math.min(growthProgress * 1.8, 1) * flor.scale;
             
@@ -313,7 +294,7 @@
             gradientTallo.addColorStop(1, '#5d8f3a');
             
             ctx.strokeStyle = gradientTallo;
-            ctx.lineWidth = Math.max(3, 5 * flor.scale); // Ancho mínimo para visibilidad
+            ctx.lineWidth = Math.max(3, 5 * flor.scale);
             ctx.beginPath();
             ctx.moveTo(flor.x, canvas.height - sueloHeight);
             
@@ -341,7 +322,6 @@
             const sueloHeight = canvas.height * 0.15;
             const alturaHojas = Math.min(100 * flor.scale, canvas.height * 0.15);
             
-            // Hoja izquierda
             ctx.save();
             ctx.translate(flor.x - 18 * flor.scale + sway * 0.5, canvas.height - sueloHeight - alturaHojas);
             ctx.scale(hojasScale, hojasScale);
@@ -363,7 +343,6 @@
             ctx.fill();
             ctx.restore();
             
-            // Hoja derecha
             ctx.save();
             ctx.translate(flor.x + 18 * flor.scale - sway * 0.5, canvas.height - sueloHeight - alturaHojas * 0.9);
             ctx.scale(hojasScale, hojasScale);
@@ -388,7 +367,6 @@
             const sway = Math.sin(animationFrame * flor.swaySpeed) * 3;
             const sueloHeight = canvas.height * 0.15;
             
-            // Calcular posición de la flor basada en el tamaño de pantalla
             const alturaFlor = Math.min(canvas.height * 0.6, canvas.width * 0.3) * flor.scale;
             const centerX = flor.x + sway;
             const centerY = canvas.height - sueloHeight - alturaFlor;
@@ -399,14 +377,12 @@
             ctx.scale(florScale, florScale);
             ctx.rotate(petalSway);
             
-            // Gradientes para tulipán amarillo
             const gradientPetal = ctx.createLinearGradient(0, -30, 0, 15);
             gradientPetal.addColorStop(0, '#ffff99');
             gradientPetal.addColorStop(0.4, '#ffdd33');
             gradientPetal.addColorStop(0.8, '#ffcc00');
             gradientPetal.addColorStop(1, '#e6b800');
             
-            // Dibujar pétalos traseros
             for (let i = 0; i < 3; i++) {
                 ctx.save();
                 ctx.rotate((i * Math.PI * 2 / 3) - Math.PI/6);
@@ -423,14 +399,12 @@
                 ctx.restore();
             }
             
-            // Gradiente más brillante para pétalos frontales
             const gradientFrontal = ctx.createLinearGradient(0, -30, 0, 15);
             gradientFrontal.addColorStop(0, '#ffffcc');
             gradientFrontal.addColorStop(0.3, '#ffff66');
             gradientFrontal.addColorStop(0.6, '#ffdd00');
             gradientFrontal.addColorStop(1, '#ffaa00');
             
-            // Dibujar pétalos frontales
             for (let i = 0; i < 3; i++) {
                 ctx.save();
                 ctx.rotate((i * Math.PI * 2 / 3) + Math.PI/6);
@@ -447,7 +421,6 @@
                 ctx.restore();
             }
             
-            // Centro del tulipán
             const gradientCentro = ctx.createRadialGradient(0, 4, 0, 0, 4, 12);
             gradientCentro.addColorStop(0, '#cc9900');
             gradientCentro.addColorStop(0.7, '#996600');
@@ -458,7 +431,6 @@
             ctx.ellipse(0, 6, 8, 4, 0, 0, 2 * Math.PI);
             ctx.fill();
             
-            // Pistilos
             ctx.fillStyle = '#8b4513';
             for (let j = 0; j < 6; j++) {
                 const angle = (j * Math.PI * 2) / 6;
@@ -489,7 +461,6 @@
             ctx.globalAlpha = 1;
         }
         
-        // Función para iniciar la música
         function iniciarMusica() {
             const audio = document.getElementById('musicaFondo');
             audio.volume = 0.5;

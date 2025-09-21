@@ -24,7 +24,6 @@
             padding: 20px;
         }
         
-        /* Estrellas en el fondo */
         .estrella {
             position: absolute;
             background: white;
@@ -37,7 +36,6 @@
             50% { opacity: 1; }
         }
         
-        /* Contenedor principal */
         .portada {
             text-align: center;
             z-index: 10;
@@ -131,7 +129,6 @@
             left: 100%;
         }
         
-        /* Icono de sorpresa */
         .icono-sorpresa {
             font-size: clamp(3rem, 10vw, 5rem);
             margin-bottom: 30px;
@@ -143,7 +140,6 @@
             50% { transform: translateY(-15px) rotate(5deg); }
         }
         
-        /* Partículas flotantes */
         .particula {
             position: absolute;
             background: rgba(255, 255, 102, 0.6);
@@ -162,7 +158,6 @@
             }
         }
         
-        /* Responsive específico para móviles */
         @media (max-width: 768px) {
             body {
                 padding: 15px;
@@ -175,7 +170,7 @@
             
             .boton-continuar {
                 padding: 12px 25px;
-                min-height: 48px; /* Para mejor touch en móviles */
+                min-height: 48px;
             }
         }
         
@@ -189,7 +184,6 @@
             }
         }
         
-        /* Orientación landscape en móviles */
         @media (max-height: 500px) and (orientation: landscape) {
             body {
                 justify-content: flex-start;
@@ -211,7 +205,6 @@
     </style>
 </head>
 <body>
-    <!-- Estrellas de fondo -->
     <div class="estrella" style="top: 10%; left: 15%; width: 3px; height: 3px; animation-delay: 0s;"></div>
     <div class="estrella" style="top: 20%; left: 80%; width: 2px; height: 2px; animation-delay: 1s;"></div>
     <div class="estrella" style="top: 30%; left: 25%; width: 3px; height: 3px; animation-delay: 2s;"></div>
@@ -221,13 +214,11 @@
     <div class="estrella" style="top: 70%; left: 70%; width: 3px; height: 3px; animation-delay: 0.8s;"></div>
     <div class="estrella" style="top: 80%; left: 40%; width: 2px; height: 2px; animation-delay: 1.8s;"></div>
     
-    <!-- Partículas flotantes -->
     <div class="particula" style="top: 25%; left: 20%; width: 4px; height: 4px; animation-delay: 0s;"></div>
     <div class="particula" style="top: 45%; left: 75%; width: 3px; height: 3px; animation-delay: 2s;"></div>
     <div class="particula" style="top: 65%; left: 30%; width: 5px; height: 5px; animation-delay: 4s;"></div>
     <div class="particula" style="top: 35%; left: 90%; width: 3px; height: 3px; animation-delay: 1s;"></div>
     
-    <!-- Contenido principal -->
     <div class="portada">
         <div class="icono-sorpresa">🎁</div>
         
@@ -243,7 +234,6 @@
     </div>
 
     <script>
-        // Agregar más estrellas dinámicamente (menos en móviles)
         function crearEstrellas() {
             const body = document.body;
             const isMobile = window.innerWidth <= 768;
@@ -261,7 +251,6 @@
             }
         }
         
-        // Crear partículas adicionales (menos en móviles)
         function crearParticulas() {
             const body = document.body;
             const isMobile = window.innerWidth <= 768;
@@ -279,26 +268,23 @@
             }
         }
         
-        // Inicializar cuando carga la página
         window.addEventListener('load', () => {
             crearEstrellas();
             crearParticulas();
         });
         
-        // Manejar cambios de orientación
         window.addEventListener('orientationchange', () => {
             setTimeout(() => {
-                // Recrear elementos para nueva orientación
                 const estrellas = document.querySelectorAll('.estrella');
                 const particulas = document.querySelectorAll('.particula');
                 
                 estrellas.forEach(estrella => {
-                    if (!estrella.style.position) return; // Solo las dinámicas
+                    if (!estrella.style.position) return;
                     estrella.remove();
                 });
                 
                 particulas.forEach(particula => {
-                    if (!particula.style.position) return; // Solo las dinámicas
+                    if (!particula.style.position) return;
                     particula.remove();
                 });
                 
@@ -307,7 +293,6 @@
             }, 500);
         });
         
-        // Efecto de hover en el botón (solo en dispositivos no táctiles)
         const boton = document.querySelector('.boton-continuar');
         if (!('ontouchstart' in window)) {
             boton.addEventListener('mouseenter', () => {
